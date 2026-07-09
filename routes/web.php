@@ -75,6 +75,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+        Route::get('/init-migrasi-uas', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed --force');
+        return "Database LaundryKu Berhasil Dimigrasi dan Di-seed! 🥳";
+    } catch (\Exception $e) {
+        return "Gagal migrasi: " . $e->getMessage();
+    }
+});
 });
 
 require __DIR__.'/auth.php';
